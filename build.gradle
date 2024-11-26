@@ -1,0 +1,34 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.ls'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://pkgs.dev.azure.com/liveswitch/_packaging/liveswitchQA/maven/v1'
+        name 'liveswitchQA'
+        credentials(PasswordCredentials)
+        authentication {
+            basic(BasicAuthentication)
+        }
+    }
+}
+dependencies {
+    implementation('com.ls:LSATFW:1.0-SNAPSHOT_0.3')  // Replace with the exact group, name, and version
+}
+test {
+
+    useTestNG(){
+        outputDirectory=file("test-output")
+        useDefaultListeners=true
+        suites 'src/test/resources/testng.xml' // Path to your TestNG XML file
+        testLogging {
+            showStandardStreams = true
+        }
+    }
+    systemProperty 'BROWSER', System.getProperty('BROWSER')
+    systemProperty 'CLUSTER', System.getProperty('CLUSTER')
+}
