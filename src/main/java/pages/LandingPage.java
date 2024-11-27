@@ -35,6 +35,7 @@ public class LandingPage {
     private By optAudioOnly = By.xpath("//input[@id='audioOnlyInput']");
     private By optRecieveOnly = By.xpath("//input[@id='receiveOnlyInput']");
     private By optCaptureScreen = By.xpath("//input[@id='screenShareInput']");
+    public By connectionSuccessfull = By.xpath("//p[contains(text(),'Data channel connection established')]");
 
     // Methods to interact with the elements
     public void clickTitleHeader(){

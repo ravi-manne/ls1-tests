@@ -114,20 +114,60 @@ public class ReusableLibrary {
         if(driver!=null)
             driver.quit();
     }
-    public static boolean joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel) {
+    public static double joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel) {
         try {
+            // Set user details and meeting parameters
             landingPage.setName(userName);
             landingPage.setChannelId(channel);
             landingPage.selectMeetingMode(mode);
-            Thread.sleep(2000);
-            landingPage.clickSubmit();
 
+            // Click submit and wait dynamically for submission to process
+            landingPage.clickSubmit();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-            return wait.until(ExpectedConditions.textToBePresentInElement(driver.findElement(landingPage.chatBox), "User"));
+
+            if ("Secondary User".equals(userName)) {
+                // Measure time taken for successful connection
+                long startTime = System.currentTimeMillis();
+
+                boolean isConnected = wait.until(ExpectedConditions.visibilityOfElementLocated(landingPage.connectionSuccessfull)).isDisplayed();
+
+                long endTime = System.currentTimeMillis();
+                double timeTakenSeconds = (endTime - startTime) / 1000.0; // Convert to seconds
+
+                System.out.println("Time taken for Secondary User to connect successfully: " + timeTakenSeconds + " seconds");
+
+//                // Check if time taken exceeds 10 seconds
+//                if (timeTakenSeconds > 10) {
+//                    System.err.println("Time taken more than 10 seconds. Returning -1.");
+//                    return -1; // Indicates failure due to exceeding time limit
+//                }
+
+                return timeTakenSeconds; // Successful connection time
+            } else {
+                // Measure time for primary user
+                long startTime = System.currentTimeMillis();
+
+                boolean isTextPresent = wait.until(ExpectedConditions.textToBePresentInElementLocated(landingPage.chatBox, "User"));
+
+                long endTime = System.currentTimeMillis();
+                double timeTakenSeconds = (endTime - startTime) / 1000.0; // Convert to seconds
+
+                System.out.println("Time taken for Primary User to connect successfully: " + timeTakenSeconds + " seconds");
+                return timeTakenSeconds; // Successful connection time
+            }
+        } catch (TimeoutException e) {
+            System.err.println("Operation timed out: " + e.getMessage());
         } catch (Exception e) {
-            return false;
+            System.err.println("An error occurred: " + e.getMessage());
         }
+        return -1; // Indicates failure for other reasons
     }
+
+
+
+
+
+
 
     public static boolean joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel, boolean enableTcp, boolean useWebSockets) {
         try {

@@ -63,55 +63,53 @@ public class MyStepdefs {
     @When("I join the video chat with the following details:")
     public void iJoinTheVideoChatWithTheFollowingDetails(DataTable dataTable) {
         try {
-            long startTime, endTime;
-            double duration;
-            String formattedDuration;
-
             String channel = generateRandomChannelID();
+
             for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
                 String userName = data.get("Name");
                 String mode = data.get("Mode");
 
-                boolean joinedSuccessfully = false;
+                double connectionTime;
 
                 if ("Primary User".equals(userName)) {
                     landingPage1 = new LandingPage(driver1);
-                    startTime = System.currentTimeMillis();
-                    joinedSuccessfully = joinVideoChat(landingPage1, driver1, userName, mode, channel);
-                    endTime = System.currentTimeMillis();
-                    Assert.assertTrue(joinedSuccessfully);
+                    connectionTime = joinVideoChat(landingPage1, driver1, userName, mode, channel);
+
+                    // Assert connection was successful and within time limit
+                    Assert.assertTrue(connectionTime > 0 && connectionTime <= 10, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
+
                     primaryMode = mode;
-                    duration = (endTime - startTime) / 1000.0;
-                    formattedDuration = String.format("%.2f", duration);
+                    String formattedDuration = String.format("%.2f", connectionTime);
+
+                    // Log success
+                    ExtentManager.getTest().pass("<b>" + userName + "</b> successfully joined the meeting <b>" + channel + "</b> in <b>" + mode + "</b> mode in <b>" + formattedDuration + "</b> seconds.");
                 } else if ("Secondary User".equals(userName)) {
                     System.out.println(" -------  2 user -------");
 
-                    driver2  = BrowserFactory.getDriver("chrome");;
+                    driver2 = BrowserFactory.getDriver("chrome");
                     driver2.get(System.getProperty("CLUSTER"));
                     landingPage2 = new LandingPage(driver2);
-                    startTime = System.currentTimeMillis();
-                    joinedSuccessfully = joinVideoChat(landingPage2, driver2, userName, mode, channel);
-                    endTime = System.currentTimeMillis();
-                    Assert.assertTrue(joinedSuccessfully);
+                    connectionTime = joinVideoChat(landingPage2, driver2, userName, mode, channel);
+
+                    // Assert connection was successful and within time limit
+                    Assert.assertTrue(connectionTime > 0 && connectionTime <= 10, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
+
                     secondaryMode = mode;
-                    duration = (endTime - startTime) / 1000.0;
-                    formattedDuration = String.format("%.2f", duration);
+                    String formattedDuration = String.format("%.2f", connectionTime);
+
+                    // Log success
+                    ExtentManager.getTest().pass("<b>" + userName + "</b> successfully joined the meeting <b>" + channel + "</b> in <b>" + mode + "</b> mode in <b>" + formattedDuration + "</b> seconds.");
                 } else {
                     throw new IllegalArgumentException("Unsupported user name: " + userName);
                 }
-
-                // Log success if the assertion passes
-                if (joinedSuccessfully) {
-                    ExtentManager.getTest().pass("<b>"+userName + "</b> successfully joined the meeting "+"<b>"+channel+"</b>"+" in <b>" + mode + "</b> mode."+" in "+"<b>"+formattedDuration+"</b>"+" seconds");
-                }
             }
         } catch (AssertionError e) {
-            handleException(e, "User couldn't join the meeting", driver1, driver2);
+            handleException(e, "connection failed", driver1, driver2);
         } catch (Exception e) {
-            handleException(e, "User couldn't join the meeting", driver1, driver2);
+            handleException(e, "connection failed", driver1, driver2);
         }
-
     }
+
 
     @And("I validate Chat Messages for {string}")
     public void iValidateChatMessagesFor(String user, DataTable dataTable) {

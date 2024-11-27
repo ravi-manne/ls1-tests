@@ -35,3 +35,12 @@ Feature: Validate join and Drop functionality
       | SFU         | MCU           |
       | MCU         | SFU           |
       | MCU         | MCU           |
+
+  @audiovideo
+  Scenario: Validate Audio and Video Stats  <PrimaryMode> - <SecondaryMode>
+    Given I launch application
+    When I join the video chat with the following details:
+      | Name           | Channel   | Mode            |
+      | Primary User   | channel01 | <PrimaryMode>   |
+      | Secondary User | channel01 | <SecondaryMode> |
+    And I close the application
