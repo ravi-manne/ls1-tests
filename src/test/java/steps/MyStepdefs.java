@@ -9,7 +9,9 @@ import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -58,6 +60,7 @@ public class MyStepdefs {
         BrowserFactory.cleanupDriver("firefox");
         BrowserFactory.cleanupDriver("android");
         BrowserFactory.cleanupDriver("safari");
+        driver2.quit();
     }
 
     @When("I join the video chat with the following details:")
@@ -86,7 +89,13 @@ public class MyStepdefs {
                 } else if ("Secondary User".equals(userName)) {
                     System.out.println(" -------  2 user -------");
 
-                    driver2 = BrowserFactory.getDriver("chrome");
+                    System.out.println(driver1.toString());
+                    ChromeOptions chromeOptions = new ChromeOptions();
+                    chromeOptions.addArguments(new String[]{"--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"});
+                    chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+                    driver2 = new ChromeDriver(chromeOptions);
+                    System.out.println(driver1.toString());
+                    System.out.println(driver2.toString());
                     driver2.get(System.getProperty("CLUSTER"));
                     landingPage2 = new LandingPage(driver2);
                     connectionTime = joinVideoChat(landingPage2, driver2, userName, mode, channel);
