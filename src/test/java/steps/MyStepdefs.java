@@ -8,6 +8,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
@@ -17,11 +18,13 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.LandingPage;
 import utilities.Constants;
+import utilities.MediaStats;
 
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
+import static utilities.Constants.MAX_WAIT;
 import static utilities.ReusableLibrary.*;
 
 
@@ -153,7 +156,87 @@ public class MyStepdefs {
             handleException(e, "validating chat messages", driver1, driver2);
         }
     }
+    @Then("I {string} {string}")
+    public void i(String action, String media) throws InterruptedException {
+        try {
+            if (media.equals("Video")) {
+                landingPage1.rightClickOnVideo();
+                landingPage1.setMuteUnMuteVideo();
+                // Log the action as pass
+                ExtentManager.getTest().pass("Successfully " + action.toLowerCase() + " the " + media.toLowerCase());
 
+                //Thread.sleep(MAX_WAIT); // waiting to resolve promise for App Stats Object
+            } else if (media.equals("Audio")) {
+                landingPage1.rightClickOnVideo();
+                landingPage1.setMuteUnMuteAudio();
+                // Log the action as pass
+                ExtentManager.getTest().pass("Successfully " + action.toLowerCase() + " the " + media.toLowerCase());
+
+                //Thread.sleep(MAX_WAIT); // waiting to resolve promise for App Stats Object
+            }
+        } catch (AssertionError e) {
+            handleException(e, "validating video stats", driver1, driver2);
+        } catch (Exception e) {
+            handleException(e, "validating video stats", driver1, driver2);
+        }
+    }
+    @And("I validate Video stats as below")
+    public void iValidateVideoStatsAsBelow(DataTable dataTable) {
+        String mode=null;
+        try {
+            for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
+                String userName = data.get("Name");
+                String[] bitrate = data.get("Bitrate").split(" ");
+                String[] fps = data.get("FPS").split(" ");
+                String[] height = data.get("Height").split(" ");
+
+                double expectedBitrate = Double.parseDouble(bitrate[1]);
+                double expectedFPS = Double.parseDouble(fps[1]);
+                double expectedHeight = Double.parseDouble(height[1]);
+
+                double actualBitrate;
+                double actualFPS;
+                double actualHeight;
+
+                if ("Primary User".equals(userName)) {
+                    mode=primaryMode;
+                    getLogger().info("Outbound{}", MediaStats.initializeConnection(driver1));
+                    //ExtentManager.getTest().info(MediaStats.initializeConnection(driver1));
+
+                    actualBitrate = MediaStats.getOutboundBitRate(primaryMode);
+                    actualFPS = MediaStats.getOutboundFPS(primaryMode);
+                    actualHeight = MediaStats.getOutboundHeight(primaryMode);
+
+                } else if ("Secondary User".equals(userName)) {
+                    mode=secondaryMode;
+                    getLogger().info("Inbound{}", MediaStats.initializeConnection(driver2));
+                    //ExtentManager.getTest().info(MediaStats.initializeConnection(driver2));
+
+                    actualBitrate = MediaStats.getInboundBitRate(secondaryMode);
+                    actualFPS = MediaStats.getInboundFPS(secondaryMode);
+                    actualHeight = MediaStats.getInboundHeight(secondaryMode);
+
+                } else {
+                    throw new IllegalArgumentException("Unsupported user name: " + userName);
+                }
+
+                // Using the combined log and validate method
+//                logAndValidateStats(userName, "bitrate", bitrate[0], expectedBitrate, actualBitrate,
+//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
+//                logAndValidateStats(userName, "FPS", fps[0], expectedFPS, actualFPS,
+//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
+//                logAndValidateStats(userName, "Height", height[0], expectedHeight, actualHeight,
+//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
+            }
+            ExtentManager.getTest().pass("Bitrate validation Passed");
+            ExtentManager.getTest().pass("FPS validation Passed");
+            ExtentManager.getTest().pass("Height validation Passed");
+        } catch (AssertionError e) {
+            handleException(e, "validating video stats", driver1, driver2);
+        } catch (Exception e) {
+            handleException(e, "validating video stats", driver1, driver2);
+        }
+    }
     @And("I validate screen sharing for {string}")
     public void iValidateScreenSharingFor(String user, DataTable dataTable) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(15));

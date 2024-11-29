@@ -1,6 +1,6 @@
 Feature: Validate join and Drop functionality
 
-  @SmokeTest1
+  @reg
   Scenario Outline: Validate chat message <PrimaryMode> - <SecondaryMode>
     Given I launch application
     When I join the video chat with the following details:
@@ -18,7 +18,7 @@ Feature: Validate join and Drop functionality
       | MCU         | SFU           |
       | MCU         | MCU           |
 
-  @SmokeTest
+  @reg
   Scenario Outline: Validate screen share <PrimaryMode> - <SecondaryMode>
     Given I launch application
     When I join the video chat with the following details:
@@ -36,14 +36,23 @@ Feature: Validate join and Drop functionality
       | MCU         | SFU           |
       | MCU         | MCU           |
 
-  @audiovideo
+  @reg
   Scenario Outline: Validate Audio and Video Stats  <PrimaryMode> - <SecondaryMode>
     Given I launch application
     When I join the video chat with the following details:
       | Name           | Channel   | Mode            |
       | Primary User   | channel01 | <PrimaryMode>   |
       | Secondary User | channel01 | <SecondaryMode> |
+    Then I "mute" "Video"
+    And I validate Video stats as below
+      | Name           | Bitrate | FPS  | Height |
+      | Primary User   | < 30    | > 15 | = 480  |
+      | Secondary User | < 30    | > 15 | = 480  |
+    Then I "unmute" "Video"
     And I close the application
     Examples:
       | PrimaryMode | SecondaryMode |
       | SFU         | SFU           |
+      | SFU         | MCU           |
+      | MCU         | SFU           |
+      | MCU         | MCU           |

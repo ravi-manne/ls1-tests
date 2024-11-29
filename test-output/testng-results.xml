@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="12" passed="12" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2024-11-28T12:07:04 IST" name="All Test Suite" finished-at="2024-11-28T12:07:23 IST" duration-ms="19079">
+  <suite started-at="2024-11-28T19:29:10 IST" name="All Test Suite" finished-at="2024-11-28T19:35:29 IST" duration-ms="379028">
     <groups>
       <group name="cucumber">
-        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@29f7cefd]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test started-at="2024-11-28T12:07:04 IST" name="Smoke tests" finished-at="2024-11-28T12:07:23 IST" duration-ms="19079">
+    <test started-at="2024-11-28T19:29:10 IST" name="Smoke tests" finished-at="2024-11-28T19:35:29 IST" duration-ms="379028">
       <class name="runners.TestRunner">
-        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:runners.TestRunner@29f7cefd]" started-at="2024-11-28T12:07:04 IST" name="setUpClass" finished-at="2024-11-28T12:07:04 IST" duration-ms="168" status="PASS">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:29:10 IST" name="setUpClass" finished-at="2024-11-28T19:29:10 IST" duration-ms="173" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@4ef74c30]]>
+                <![CDATA[org.testng.TestRunner@4c2bb6e0]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method is-config="true" signature="beforeClass(java.lang.String)[pri:0, instance:runners.TestRunner@29f7cefd]" started-at="2024-11-28T12:07:04 IST" name="beforeClass" finished-at="2024-11-28T12:07:04 IST" duration-ms="53" status="PASS">
+        <test-method is-config="true" signature="beforeClass(java.lang.String)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:29:10 IST" name="beforeClass" finished-at="2024-11-28T19:29:10 IST" duration-ms="53" status="PASS">
           <params>
             <param index="0">
               <value is-null="true"/>
@@ -30,7 +30,135 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- beforeClass -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@29f7cefd]" started-at="2024-11-28T12:07:04 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T12:07:23 IST" duration-ms="18816" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:29:10 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:29:38 IST" duration-ms="28352" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate chat message SFU - SFU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:29:38 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:30:06 IST" duration-ms="27510" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate chat message SFU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:30:06 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:30:38 IST" duration-ms="32609" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate chat message MCU - SFU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:30:38 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:31:15 IST" duration-ms="36883" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate chat message MCU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:31:15 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:31:51 IST" duration-ms="35846" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate screen share SFU - SFU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:31:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:32:27 IST" duration-ms="36250" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate screen share SFU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:32:27 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:33:01 IST" duration-ms="33477" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate screen share MCU - SFU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:33:01 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:33:29 IST" duration-ms="27976" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate screen share MCU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:33:29 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:34:01 IST" duration-ms="32068" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -46,7 +174,55 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:runners.TestRunner@29f7cefd]" started-at="2024-11-28T12:07:23 IST" name="tearDownClass" finished-at="2024-11-28T12:07:23 IST" duration-ms="30" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:34:01 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:34:30 IST" duration-ms="29104" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate Audio and Video Stats  SFU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:34:30 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:35:01 IST" duration-ms="31121" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate Audio and Video Stats  MCU - SFU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:35:01 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2024-11-28T19:35:29 IST" duration-ms="27558" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Validate Audio and Video Stats  MCU - MCU"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Validate join and Drop functionality"]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:runners.TestRunner@700fb871]" started-at="2024-11-28T19:35:29 IST" name="tearDownClass" finished-at="2024-11-28T19:35:29 IST" duration-ms="27" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->

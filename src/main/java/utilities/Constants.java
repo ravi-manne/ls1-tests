@@ -7,6 +7,6 @@ public class Constants {
     public static String IOD_DEVICE="iPhoe14";
     public static int MIN_WAIT = 750;
     public static int AVG_WAIT = 1500;
-    public static int MAX_WAIT = 5000;
+    public static int MAX_WAIT = 2000;
 
 }
