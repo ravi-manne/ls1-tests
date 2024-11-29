@@ -63,7 +63,8 @@ public class MyStepdefs {
         BrowserFactory.cleanupDriver("firefox");
         BrowserFactory.cleanupDriver("android");
         BrowserFactory.cleanupDriver("safari");
-        driver2.quit();
+        if(driver2!=null)
+            driver2.quit();
     }
 
     @When("I join the video chat with the following details:")
