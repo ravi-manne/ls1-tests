@@ -1,0 +1,61 @@
+trigger:
+- main  # Adjust to the branch that triggers the pipeline
+
+pool:
+  vmImage: 'ubuntu-latest'  # Use 'windows-latest' or 'macos-latest' if needed
+
+variables:
+  BROWSER: 'chrome'  # Default browser, can be overridden
+  CLUSTER: 'rc'      # Default cluster, can be overridden
+
+stages:
+- stage: BuildAndTest
+  displayName: 'Build and Test'
+  jobs:
+  - job: Build
+    displayName: 'Build and Execute Tests'
+    steps:
+    # Step 1: Checkout Code
+    - task: Checkout@1
+
+    # Step 2: Set up JDK
+    - task: UseJavaVersion@1
+      inputs:
+        versionSpec: '11'  # Specify your Java version
+        jdkArchitecture: 'x64'
+
+    # Step 3: Cache Gradle dependencies (Optional)
+    - task: Cache@2
+      inputs:
+        key: 'gradle | "$(Agent.OS)" | gradle-wrapper.properties'
+        path: ~/.gradle/caches
+        restoreKeys: 'gradle | "$(Agent.OS)"'
+      displayName: 'Cache Gradle Dependencies'
+
+    # Step 4: Grant execute permission to Gradle wrapper
+    - script: |
+        chmod +x gradlew
+      displayName: 'Set Execute Permission on Gradle Wrapper'
+
+    # Step 5: Build the project
+    - script: |
+        ./gradlew clean build
+      displayName: 'Build Project'
+
+    # Step 6: Run TestNG Tests
+    - script: |
+        gradle clean test -DsuiteFile=resources/testng.xml  -DBROWSER=chrome -DCLUSTER=https://uberchat-rc-apsouth1.liveswitch.io/
+      displayName: 'Execute TestNG Tests'
+
+    # Step 7: Publish TestNG Results
+    - task: PublishTestResults@2
+      inputs:
+        testResultsFiles: '**/test-output/testng-results.xml'
+        testRunTitle: 'TestNG Test Results'
+
+    # Step 8: Publish HTML Report (Extent Report)
+    - task: PublishPipelineArtifact@1
+      inputs:
+        targetPath: 'build/reports'  # Path to your Extent HTML report
+        artifact: 'TestReports'
+        publishLocation: 'pipeline'
