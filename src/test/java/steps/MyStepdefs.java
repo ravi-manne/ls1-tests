@@ -35,7 +35,7 @@ public class MyStepdefs {
     LandingPage landingPage2;
     private String primaryMode=null;
     private String secondaryMode=null;
-
+    private double maxConnectionTime = Double.parseDouble(BrowserFactory.getPropertyValue("MAX-CONNECTION-TIME"));
     ChromeOptions chromeOptions;
     static UiAutomator2Options androidOptions;
     private static XCUITestOptions iosOptions;
@@ -83,7 +83,7 @@ public class MyStepdefs {
                     connectionTime = joinVideoChat(landingPage1, driver1, userName, mode, channel);
 
                     // Assert connection was successful and within time limit
-                    Assert.assertTrue(connectionTime > 0 && connectionTime <= 10, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
+                    Assert.assertTrue(connectionTime > 0 && connectionTime <= maxConnectionTime, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
 
                     primaryMode = mode;
                     String formattedDuration = String.format("%.2f", connectionTime);
@@ -105,7 +105,7 @@ public class MyStepdefs {
                     connectionTime = joinVideoChat(landingPage2, driver2, userName, mode, channel);
 
                     // Assert connection was successful and within time limit
-                    Assert.assertTrue(connectionTime > 0 && connectionTime <= 10, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
+                    Assert.assertTrue(connectionTime > 0 && connectionTime <= maxConnectionTime, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
 
                     secondaryMode = mode;
                     String formattedDuration = String.format("%.2f", connectionTime);

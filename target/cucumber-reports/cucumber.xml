@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="Cucumber" time="378.848" tests="12" skipped="0" failures="0" errors="0">
-<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate chat message SFU - SFU" time="28.331">
+<testsuite name="Cucumber" time="281.357" tests="12" skipped="0" failures="0" errors="0">
+<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate chat message SFU - SFU" time="22.837">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -8,7 +8,7 @@ And I validate Chat Messages for "Primary User".............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate chat message SFU - MCU" time="27.508">
+<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate chat message SFU - MCU" time="22.367">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -16,7 +16,7 @@ And I validate Chat Messages for "Primary User".............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate chat message MCU - SFU" time="32.607">
+<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate chat message MCU - SFU" time="21.822">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -24,7 +24,7 @@ And I validate Chat Messages for "Primary User".............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate chat message MCU - MCU" time="36.882">
+<testcase classname="Validate join and Drop functionality" name="Validate chat message &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate chat message MCU - MCU" time="21.603">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -32,7 +32,7 @@ And I validate Chat Messages for "Primary User".............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate screen share SFU - SFU" time="35.844">
+<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate screen share SFU - SFU" time="24.315">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -40,7 +40,7 @@ And I validate screen sharing for "Primary User"............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate screen share SFU - MCU" time="36.248">
+<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate screen share SFU - MCU" time="24.135">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -48,7 +48,7 @@ And I validate screen sharing for "Primary User"............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate screen share MCU - SFU" time="33.475">
+<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate screen share MCU - SFU" time="24.512">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -56,7 +56,7 @@ And I validate screen sharing for "Primary User"............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate screen share MCU - MCU" time="27.975">
+<testcase classname="Validate join and Drop functionality" name="Validate screen share &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate screen share MCU - MCU" time="24.019">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -64,7 +64,7 @@ And I validate screen sharing for "Primary User"............................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate Audio and Video Stats  SFU - SFU" time="32.067">
+<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.1: Validate Audio and Video Stats  SFU - SFU" time="23.967">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -74,7 +74,7 @@ Then I "unmute" "Video".....................................................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate Audio and Video Stats  SFU - MCU" time="29.102">
+<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.2: Validate Audio and Video Stats  SFU - MCU" time="24.783">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -84,7 +84,7 @@ Then I "unmute" "Video".....................................................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate Audio and Video Stats  MCU - SFU" time="31.12">
+<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.3: Validate Audio and Video Stats  MCU - SFU" time="22.846">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed
@@ -94,7 +94,7 @@ Then I "unmute" "Video".....................................................pass
 And I close the application.................................................passed
 ]]></system-out>
 </testcase>
-<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate Audio and Video Stats  MCU - MCU" time="27.557">
+<testcase classname="Validate join and Drop functionality" name="Validate Audio and Video Stats  &lt;PrimaryMode&gt; - &lt;SecondaryMode&gt; - #1.4: Validate Audio and Video Stats  MCU - MCU" time="24.03">
 <system-out><![CDATA[
 Given I launch application..................................................passed
 When I join the video chat with the following details:......................passed

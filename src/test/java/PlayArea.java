@@ -17,13 +17,14 @@ public class PlayArea {
 
     public static void main(String[] args) throws InterruptedException {
         System.out.println("Hello");
-        WebDriver driver1 = BrowserFactory.getDriver("chrome");
-        WebDriver driver2 = BrowserFactory.getDriver("firefox");
-        driver2.get("https://uberchat-rc-apsouth1.liveswitch.io/");
-        driver1.get("https://uberchat-rc-apsouth1.liveswitch.io/");
+        System.out.println("-----"+ BrowserFactory.getPropertyValue("MAX-CONNECTION-TIME"));
 
-        Thread.sleep(2000);
-
+//        WebDriver driver1 = BrowserFactory.getDriver("chrome");
+//        WebDriver driver2 = BrowserFactory.getDriver("firefox");
+//        driver2.get("https://uberchat-rc-apsouth1.liveswitch.io/");
+//        driver1.get("https://uberchat-rc-apsouth1.liveswitch.io/");
+//        Thread.sleep(2000);
+//
 
 
 //        //driver.findElement(By.xpath("//input[@id='audioOnlyInput']")).click();
@@ -66,9 +67,11 @@ public class PlayArea {
 //
 //        System.out.println("Video active: " + videoActive);
 //        System.out.println("Audio active: " + audioActive);
-        System.out.println(driver1.toString());
-        System.out.println(driver2.toString());
-        driver1.quit();
-        driver2.quit();
+
+
+//        System.out.println(driver1.toString());
+//        System.out.println(driver2.toString());
+//        driver1.quit();
+//        driver2.quit();
     }
 }

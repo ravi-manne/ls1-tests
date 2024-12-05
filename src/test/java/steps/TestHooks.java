@@ -12,25 +12,43 @@ import static core.ExtentManager.extent;
 
 public class TestHooks {
     public static AppiumDriverLocalService service;
+
     @Before
-    public void setup(Scenario scenario){
-        if (scenario.getName().toLowerCase().contains("screenshare")) {
-            System.out.println("Skipping scenario: " + scenario.getName());
-            throw new SkipException("Skipping scenario: " + scenario.getName());
-        }
-        if(System.getProperty("BROWSER").equals("android")){
+    public void setup(Scenario scenario) {
+        // Skip scenarios explicitly mentioning "screenshare" in their names
+//        if (scenario.getName().toLowerCase().contains("screen share")) {
+//            System.out.println("Skipping scenario: " + scenario.getName());
+//            throw new SkipException("Skipping scenario: " + scenario.getName());
+//        }
+
+        // Skip all scenarios if the browser is "android"
+//        if ("android".equalsIgnoreCase(System.getProperty("BROWSER"))) {
+//            System.out.println("Skipping scenario for Android browser: " + scenario.getName());
+//            throw new SkipException("Skipping scenario for Android browser: " + scenario.getName());
+//        }
+
+        // Start Appium service for Android browser
+        if ("android".equalsIgnoreCase(System.getProperty("BROWSER"))) {
+            if (scenario.getName().toLowerCase().contains("screen share")) {
+                System.out.println("Skipping scenario: " + scenario.getName());
+                throw new SkipException("Skipping scenario: " + scenario.getName());
+            }
             service = BrowserFactory.startAppiumService();
             service.start();
         }
-        ExtentManager.createTest(scenario.getName(),"");
+
+        // Initialize Extent reporting
+        ExtentManager.createTest(scenario.getName(), "");
     }
 
     @After
-    public void teardown(){
-        if(service!=null)
+    public void teardown() {
+        // Stop Appium service if it was started
+        if (service != null) {
             service.stop();
+        }
+
+        // Flush Extent reports
         extent.flush();
-
     }
-
 }

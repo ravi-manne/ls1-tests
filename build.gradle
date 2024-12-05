@@ -17,7 +17,7 @@ repositories {
     }
 }
 dependencies {
-    implementation('com.ls:LSATFW:1.0-SNAPSHOT_0.3')  // Replace with the exact group, name, and version
+    implementation('com.ls:LSATFW:1.0-SNAPSHOT_0.4')  // Replace with the exact group, name, and version
 }
 test {
 
@@ -31,4 +31,5 @@ test {
     }
     systemProperty 'BROWSER', System.getProperty('BROWSER')
     systemProperty 'CLUSTER', System.getProperty('CLUSTER')
+
 }
