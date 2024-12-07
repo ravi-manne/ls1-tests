@@ -4,7 +4,6 @@ import core.BrowserFactory;
 import core.ExtentManager;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.ios.options.XCUITestOptions;
-import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -14,6 +13,7 @@ import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import pages.LandingPage;
@@ -24,7 +24,8 @@ import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
-import static utilities.Constants.MAX_WAIT;
+import static io.appium.java_client.internal.CapabilityHelpers.toDouble;
+import static utilities.MediaStats.*;
 import static utilities.ReusableLibrary.*;
 
 
@@ -39,6 +40,9 @@ public class MyStepdefs {
     ChromeOptions chromeOptions;
     static UiAutomator2Options androidOptions;
     private static XCUITestOptions iosOptions;
+    String channelID = generateRandomChannelID();
+    double sumOfConnectionTime=0.0;
+    private static double maxConnectionTime1 = 0.0;
 
     @Given("I launch application")
     public void iLaunchApplication() throws InterruptedException {
@@ -183,61 +187,44 @@ public class MyStepdefs {
     }
     @And("I validate Video stats as below")
     public void iValidateVideoStatsAsBelow(DataTable dataTable) {
-        String mode=null;
         try {
             for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
-                String userName = data.get("Name");
-                String[] bitrate = data.get("Bitrate").split(" ");
-                String[] fps = data.get("FPS").split(" ");
-                String[] height = data.get("Height").split(" ");
+                // Parse expected values and operators
+                double expectedBitrate = parseExpectedValue(data.get("Bitrate"));
+                String bitrateOperator = parseOperator(data.get("Bitrate"));
 
-                double expectedBitrate = Double.parseDouble(bitrate[1]);
-                double expectedFPS = Double.parseDouble(fps[1]);
-                double expectedHeight = Double.parseDouble(height[1]);
+                double expectedFPS = parseExpectedValue(data.get("FPS"));
+                String fpsOperator = parseOperator(data.get("FPS"));
 
-                double actualBitrate;
-                double actualFPS;
-                double actualHeight;
+                double expectedHeight = parseExpectedValue(data.get("Height"));
+                String heightOperator = parseOperator(data.get("Height"));
 
-                if ("Primary User".equals(userName)) {
-                    mode=primaryMode;
-                    getLogger().info("Outbound{}", MediaStats.initializeConnection(driver1));
-                    //ExtentManager.getTest().info(MediaStats.initializeConnection(driver1));
+                double expectedWidth = parseExpectedValue(data.get("Width"));
+                String widthOperator = parseOperator(data.get("Width"));
 
-                    actualBitrate = MediaStats.getOutboundBitRate(primaryMode);
-                    actualFPS = MediaStats.getOutboundFPS(primaryMode);
-                    actualHeight = MediaStats.getOutboundHeight(primaryMode);
+                // Extract actual values
+                Map<String, Object> extractedValues = MediaStats.extractMediaStreamInfo(getCallConnectionStatsJson(driver1));
+                ExtentManager.getTest().info(extractedValues.toString());
 
-                } else if ("Secondary User".equals(userName)) {
-                    mode=secondaryMode;
-                    getLogger().info("Inbound{}", MediaStats.initializeConnection(driver2));
-                    //ExtentManager.getTest().info(MediaStats.initializeConnection(driver2));
+                // Get actual values with type-safe conversion
+                double actualBitrate = toDouble(extractedValues.getOrDefault("outbound_bitrate", 0.0));
+                double actualFPS = toDouble(extractedValues.getOrDefault("outbound_fps", 0.0));
+                double actualHeight = toDouble(extractedValues.getOrDefault("outbound_height", 0.0));
+                double actualWidth = toDouble(extractedValues.getOrDefault("outbound_width", 0.0));
 
-                    actualBitrate = MediaStats.getInboundBitRate(secondaryMode);
-                    actualFPS = MediaStats.getInboundFPS(secondaryMode);
-                    actualHeight = MediaStats.getInboundHeight(secondaryMode);
-
-                } else {
-                    throw new IllegalArgumentException("Unsupported user name: " + userName);
-                }
-
-                // Using the combined log and validate method
-//                logAndValidateStats(userName, "bitrate", bitrate[0], expectedBitrate, actualBitrate,
-//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
-//                logAndValidateStats(userName, "FPS", fps[0], expectedFPS, actualFPS,
-//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
-//                logAndValidateStats(userName, "Height", height[0], expectedHeight, actualHeight,
-//                        expectedBitrate, actualBitrate, expectedFPS, actualFPS, expectedHeight, actualHeight,mode);
+                // Validate and log results
+                validateAndLog("Bitrate", actualBitrate, expectedBitrate, bitrateOperator);
+                validateAndLog("FPS", actualFPS, expectedFPS, fpsOperator);
+                validateAndLog("Height", actualHeight, expectedHeight, heightOperator);
+                validateAndLog("Width", actualWidth, expectedWidth, widthOperator);
             }
-            ExtentManager.getTest().pass("Bitrate validation Passed");
-            ExtentManager.getTest().pass("FPS validation Passed");
-            ExtentManager.getTest().pass("Height validation Passed");
         } catch (AssertionError e) {
             handleException(e, "validating video stats", driver1, driver2);
         } catch (Exception e) {
             handleException(e, "validating video stats", driver1, driver2);
         }
     }
+
     @And("I validate screen sharing for {string}")
     public void iValidateScreenSharingFor(String user, DataTable dataTable) throws InterruptedException {
         WebDriverWait wait = new WebDriverWait(driver1, Duration.ofSeconds(15));
@@ -263,4 +250,54 @@ public class MyStepdefs {
             handleException(e, "validating screen sharing", driver1, driver2);
         }
     }
+
+    @Then("Primary User initiated the meeting")
+    public void primaryUserInitiatedTheMeeting() throws InterruptedException {
+
+        landingPage1 = new LandingPage(driver1);
+        landingPage1.setChannelId(channelID);
+        landingPage1.clickSubmit();
+
+
+    }
+
+    @And("Secondary User Joined and dropped the call")
+    public void secondaryUserJoinedTheCall() throws InterruptedException {
+        ChromeOptions chromeOptions = new ChromeOptions();
+        chromeOptions.addArguments(new String[]{"--use-fake-ui-for-media-stream", "--use-fake-device-for-media-stream"});
+        chromeOptions.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+        driver2 = new ChromeDriver(chromeOptions);
+        landingPage2 = new LandingPage(driver2);
+        driver2.get(System.getProperty("CLUSTER"));
+        landingPage2.setChannelId(channelID);
+        landingPage2.clickSubmit();
+        WebDriverWait wait = new WebDriverWait(driver2, Duration.ofSeconds(20));
+        long startTime = System.currentTimeMillis();
+
+        boolean isConnected = wait.until(ExpectedConditions.visibilityOfElementLocated(landingPage2.connectionSuccessfull)).isDisplayed();
+
+        long endTime = System.currentTimeMillis();
+        double timeTakenSeconds = (endTime - startTime) / 1000.0; // Convert to seconds
+        sumOfConnectionTime += timeTakenSeconds;
+
+        // Check if the current time is the highest and update maxConnectionTime
+        if (timeTakenSeconds > maxConnectionTime1) {
+            maxConnectionTime1 = timeTakenSeconds;
+        }
+
+        System.out.println("Time taken for Primary User to connect successfully: " + timeTakenSeconds + " seconds");
+        System.out.println("Current maximum connection time: " + maxConnectionTime1 + " seconds");
+
+        driver2.findElement(landingPage2.btnLeave).click();
+        Thread.sleep(1000);
+        driver2.quit();
+    }
+
+    @And("Print average connection time taken")
+    public void printAverageConnectionTimeTaken() {
+        System.out.println("************ Average Connection Time Taken ********** "+sumOfConnectionTime/5);
+    }
+
+
+
 }

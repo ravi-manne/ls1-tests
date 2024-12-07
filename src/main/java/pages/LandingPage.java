@@ -36,7 +36,7 @@ public class LandingPage {
     private By optRecieveOnly = By.xpath("//input[@id='receiveOnlyInput']");
     private By optCaptureScreen = By.xpath("//input[@id='screenShareInput']");
     public By connectionSuccessfull = By.xpath("//p[contains(text(),'Data channel connection established')]");
-
+    public By btnLeave = By.xpath("//button[@id='leaveButton']");
     // Methods to interact with the elements
     public void clickTitleHeader(){
         WebElement title = wait.until(ExpectedConditions.visibilityOfElementLocated(hdrTitle));

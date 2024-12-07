@@ -36,7 +36,7 @@ Feature: Validate join and Drop functionality
       | MCU         | SFU           |
       | MCU         | MCU           |
 
-  @reg
+  @reg1
   Scenario Outline: Validate Audio and Video Stats  <PrimaryMode> - <SecondaryMode>
     Given I launch application
     When I join the video chat with the following details:
@@ -45,10 +45,14 @@ Feature: Validate join and Drop functionality
       | Secondary User | channel01 | <SecondaryMode> |
     Then I "mute" "Video"
     And I validate Video stats as below
-      | Name           | Bitrate | FPS  | Height |
-      | Primary User   | < 30    | > 15 | = 480  |
-      | Secondary User | < 30    | > 15 | = 480  |
+      | Bitrate | FPS  | Height | Width |
+      | < 400   | < 35 | = 480  | = 640 |
+
     Then I "unmute" "Video"
+    And I validate Video stats as below
+      | Bitrate | FPS  | Height | Width |
+      | > 200   | < 35 | = 480  | = 640 |
+
     And I close the application
     Examples:
       | PrimaryMode | SecondaryMode |
@@ -56,3 +60,15 @@ Feature: Validate join and Drop functionality
       | SFU         | MCU           |
       | MCU         | SFU           |
       | MCU         | MCU           |
+
+  @reg
+  Scenario: Calculate Joining Time
+    Given I launch application
+    Then Primary User initiated the meeting
+    And  Secondary User Joined and dropped the call
+    And  Secondary User Joined and dropped the call
+    And  Secondary User Joined and dropped the call
+    And  Secondary User Joined and dropped the call
+    And  Secondary User Joined and dropped the call
+    And Print average connection time taken
+    Then I close the application
