@@ -114,53 +114,47 @@ public class ReusableLibrary {
         if(driver!=null)
             driver.quit();
     }
-    public static double joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel) {
+    public static double joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel, String options) {
         try {
-            // Set user details and meeting parameters
             landingPage.setName(userName);
             landingPage.setChannelId(channel);
             landingPage.selectMeetingMode(mode);
 
-            // Click submit and wait dynamically for submission to process
+            if (!"N/A".equals(options)) {
+                switch (options) {
+                    case "TCP":
+                        landingPage.setForceTurnsTcp(true);
+                        break;
+                    case "PublishOnly":
+                        landingPage.setOptPublishOnly(true);
+                        break;
+                    case "ReceiveOnly":
+                        landingPage.setOptRecieveOnly(true);
+                        break;
+                }
+                Thread.sleep(2000);
+            }
+
             landingPage.clickSubmit();
             WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+            long startTime = System.currentTimeMillis();
 
             if ("Secondary User".equals(userName)) {
-                // Measure time taken for successful connection
-                long startTime = System.currentTimeMillis();
-
-                boolean isConnected = wait.until(ExpectedConditions.visibilityOfElementLocated(landingPage.connectionSuccessfull)).isDisplayed();
-
-                long endTime = System.currentTimeMillis();
-                double timeTakenSeconds = (endTime - startTime) / 1000.0; // Convert to seconds
-
-                System.out.println("Time taken for Secondary User to connect successfully: " + timeTakenSeconds + " seconds");
-
-//                // Check if time taken exceeds 10 seconds
-//                if (timeTakenSeconds > 10) {
-//                    System.err.println("Time taken more than 10 seconds. Returning -1.");
-//                    return -1; // Indicates failure due to exceeding time limit
-//                }
-
-                return timeTakenSeconds; // Successful connection time
+                wait.until(ExpectedConditions.visibilityOfElementLocated(landingPage.connectionSuccessfull)).isDisplayed();
             } else {
-                // Measure time for primary user
-                long startTime = System.currentTimeMillis();
-
-                boolean isTextPresent = wait.until(ExpectedConditions.textToBePresentInElementLocated(landingPage.chatBox, "User"));
-
-                long endTime = System.currentTimeMillis();
-                double timeTakenSeconds = (endTime - startTime) / 1000.0; // Convert to seconds
-
-                System.out.println("Time taken for Primary User to connect successfully: " + timeTakenSeconds + " seconds");
-                return timeTakenSeconds; // Successful connection time
+                wait.until(ExpectedConditions.textToBePresentInElementLocated(landingPage.chatBox, "User"));
             }
+
+            long endTime = System.currentTimeMillis();
+            double timeTakenSeconds = (endTime - startTime) / 1000.0;
+            System.out.println("Time taken for " + userName + " to connect successfully: " + timeTakenSeconds + " seconds");
+            return timeTakenSeconds;
         } catch (TimeoutException e) {
             System.err.println("Operation timed out: " + e.getMessage());
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }
-        return -1; // Indicates failure for other reasons
+        return -1;
     }
 
 

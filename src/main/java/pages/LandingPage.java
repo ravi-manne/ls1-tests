@@ -34,6 +34,8 @@ public class LandingPage {
     private By useWebSocketsForMedia = By.xpath("//input[@id='useWebSocketsForMedia']");
     private By optAudioOnly = By.xpath("//input[@id='audioOnlyInput']");
     private By optRecieveOnly = By.xpath("//input[@id='receiveOnlyInput']");
+    private By optPublishOnly = By.xpath("//input[@id='publishOnlyInput']");
+
     private By optCaptureScreen = By.xpath("//input[@id='screenShareInput']");
     public By connectionSuccessfull = By.xpath("//p[contains(text(),'Data channel connection established')]");
     public By btnLeave = By.xpath("//button[@id='leaveButton']");
@@ -102,19 +104,21 @@ public class LandingPage {
         muteAudioElement.click();
     }
 
-    public void sendMessage(String msg) {
+    public void sendMessage(String msg) throws InterruptedException {
+        System.out.println("********************************");
         WebElement chatInput = wait.until(ExpectedConditions.visibilityOfElementLocated(chatMessageInput));
         chatInput.sendKeys(msg);
         WebElement sendElement = wait.until(ExpectedConditions.elementToBeClickable(sendButton));
         scrollToElement(sendElement);
         sendElement.sendKeys(Keys.ENTER);
+
     }
 
     public void screenShare() throws InterruptedException {
         //WebElement screenShareElement = wait.until(ExpectedConditions.elementToBeClickable(screenShareButton));
         //Thread.sleep(2000);
         //screenShareElement.sendKeys(Keys.ENTER);
-       driver.findElement(screenShareButton).click();
+        driver.findElement(screenShareButton).click();
         //WebElement screenShareElement = screenShareButton
         //screenShareElement.click();
     }
@@ -141,6 +145,12 @@ public class LandingPage {
     }
     public void setOptRecieveOnly(boolean enable) {
         WebElement element = wait.until(ExpectedConditions.elementToBeClickable(optRecieveOnly));
+        if (element.isSelected() != enable) {
+            element.click();
+        }
+    }
+    public void setOptPublishOnly(boolean enable) {
+        WebElement element = wait.until(ExpectedConditions.elementToBeClickable(optPublishOnly));
         if (element.isSelected() != enable) {
             element.click();
         }

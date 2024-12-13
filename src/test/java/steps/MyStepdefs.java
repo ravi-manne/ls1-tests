@@ -79,17 +79,18 @@ public class MyStepdefs {
             for (Map<String, String> data : dataTable.asMaps(String.class, String.class)) {
                 String userName = data.get("Name");
                 String mode = data.get("Mode");
+                String options = data.get("WebOptions");
 
                 double connectionTime;
 
                 if ("Primary User".equals(userName)) {
                     landingPage1 = new LandingPage(driver1);
-                    connectionTime = joinVideoChat(landingPage1, driver1, userName, mode, channel);
+                    connectionTime = joinVideoChat(landingPage1, driver1, userName, mode, channel,options);
 
                     // Assert connection was successful and within time limit
                     Assert.assertTrue(connectionTime > 0 && connectionTime <= maxConnectionTime, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
 
-                    primaryMode = mode;
+                    //primaryMode = mode;
                     String formattedDuration = String.format("%.2f", connectionTime);
 
                     // Log success
@@ -106,12 +107,12 @@ public class MyStepdefs {
                     System.out.println(driver2.toString());
                     driver2.get(System.getProperty("CLUSTER"));
                     landingPage2 = new LandingPage(driver2);
-                    connectionTime = joinVideoChat(landingPage2, driver2, userName, mode, channel);
+                    connectionTime = joinVideoChat(landingPage2, driver2, userName, mode, channel,options);
 
                     // Assert connection was successful and within time limit
                     Assert.assertTrue(connectionTime > 0 && connectionTime <= maxConnectionTime, "Connection was unsuccessful, taken <b>"+connectionTime+" </b>seconds for connection");
 
-                    secondaryMode = mode;
+                    //secondaryMode = mode;
                     String formattedDuration = String.format("%.2f", connectionTime);
 
                     // Log success
