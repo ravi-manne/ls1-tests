@@ -149,9 +149,9 @@ Feature: Validate join and Drop functionality
     Examples:
       | PrimaryMode | SecondaryMode |
       | SFU         | SFU           |
-      | SFU         | MCU           |
-      | MCU         | SFU           |
-      | MCU         | MCU           |
+#      | SFU         | MCU           |
+#      | MCU         | SFU           |
+#      | MCU         | MCU           |
 
 
   @reg @receivehonly

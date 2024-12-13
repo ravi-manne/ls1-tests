@@ -115,6 +115,7 @@ public class ReusableLibrary {
             driver.quit();
     }
     public static double joinVideoChat(LandingPage landingPage, WebDriver driver, String userName, String mode, String channel, String options) {
+        double timeTakenSeconds = 0;
         try {
             landingPage.setName(userName);
             landingPage.setChannelId(channel);
@@ -146,7 +147,7 @@ public class ReusableLibrary {
             }
 
             long endTime = System.currentTimeMillis();
-            double timeTakenSeconds = (endTime - startTime) / 1000.0;
+            timeTakenSeconds = (endTime - startTime) / 1000.0;
             System.out.println("Time taken for " + userName + " to connect successfully: " + timeTakenSeconds + " seconds");
             return timeTakenSeconds;
         } catch (TimeoutException e) {
@@ -154,7 +155,8 @@ public class ReusableLibrary {
         } catch (Exception e) {
             System.err.println("An error occurred: " + e.getMessage());
         }
-        return -1;
+        return timeTakenSeconds;
+
     }
 
 

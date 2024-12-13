@@ -285,9 +285,10 @@ public class MyStepdefs {
         if (timeTakenSeconds > maxConnectionTime1) {
             maxConnectionTime1 = timeTakenSeconds;
         }
+        ExtentManager.getTest().info("Connection time for Channel : <b>" +channelID+"</b> is <b> "+timeTakenSeconds + " </b> seconds");
 
         System.out.println("Time taken for Primary User to connect successfully: " + timeTakenSeconds + " seconds");
-        System.out.println("Current maximum connection time: " + maxConnectionTime1 + " seconds");
+        System.out.println("Connecting time: " + maxConnectionTime1 + " seconds");
 
         driver2.findElement(landingPage2.btnLeave).click();
         Thread.sleep(1000);
@@ -296,7 +297,8 @@ public class MyStepdefs {
 
     @And("Print average connection time taken")
     public void printAverageConnectionTimeTaken() {
-        System.out.println("************ Average Connection Time Taken ********** "+sumOfConnectionTime/5);
+        System.out.println("************ Maximum Connection Time Taken ********** "+maxConnectionTime1);
+        ExtentManager.getTest().info("<b><font color='green'> Maximum Connection Time Taken : " + maxConnectionTime1 + "</font></b>");
     }
 
 
