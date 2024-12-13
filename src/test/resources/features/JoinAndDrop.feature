@@ -184,7 +184,7 @@ Feature: Validate join and Drop functionality
       | MCU         | SFU           |
       | MCU         | MCU           |
 
-  @reg1
+  @reg
   Scenario: Calculate Joining Time
     Given I launch application
     Then Primary User initiated the meeting

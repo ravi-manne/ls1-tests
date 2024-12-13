@@ -13,7 +13,7 @@ import java.io.IOException;
 @CucumberOptions(
         features = "src/test/resources/features", // Path to the feature files
         glue = "steps",      // Package containing step definitions
-        tags = "@reg1",                      // Tags to filter scenarios
+        tags = "@reg",                      // Tags to filter scenarios
         plugin = {
                 "pretty",                         // Output the Cucumber test output in the console
                 "html:target/cucumber-reports/cucumber.html", // HTML report
